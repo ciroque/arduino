@@ -1,7 +1,7 @@
 #include <Adafruit_DotStar.h>
 #include <SPI.h>
 
-#define NUMPIXELS 144
+#define NUMPIXELS 60
 
 Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
 

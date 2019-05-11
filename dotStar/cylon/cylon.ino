@@ -18,7 +18,7 @@ const int TAIL_LENGTH = 14;
 const int LEFT = 0;
 const int RIGHT = 1;
 int head = 0, tail = head - TAIL_LENGTH;
-uint32_t color = 0x00FF00;
+uint32_t color = 0x002200;
 int direction = RIGHT;
 
 void loop() {
