@@ -34,5 +34,5 @@ void loop() {
   index = random(NUMPIXELS);
   strip.setPixelColor(index, generateColor());
   strip.show();
-  delay(6);
+  delay(10);
 }
