@@ -1,7 +1,7 @@
 #include <Adafruit_DotStar.h>
 #include <SPI.h>
 
-#define NUMPIXELS 60
+#define NUMPIXELS 144 // 60 for bright white led strip, 144 for dotStar color 144
 
 Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
 
@@ -15,6 +15,7 @@ void setup() {
   randomSeed(analogRead(0));
 
   strip.begin();
+  strip.clear();
   strip.show();
 }
 
