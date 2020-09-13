@@ -3,7 +3,11 @@
 
 #define NUMPIXELS 144
 
-Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
+//Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
+#define DATAPIN    4
+#define CLOCKPIN   5
+
+Adafruit_DotStar strip(NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
 
 void setup() {
   Serial.begin(9600);

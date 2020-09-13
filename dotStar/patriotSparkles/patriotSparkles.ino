@@ -9,7 +9,12 @@
 #define BLUE 0x0000FF
 #define COLOR_COUNT 3
 
-Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
+//Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
+
+#define DATAPIN    4
+#define CLOCKPIN   5
+
+Adafruit_DotStar strip(NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
 
 void setup() {
   #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000L)

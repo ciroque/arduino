@@ -1,9 +1,15 @@
 #include <Adafruit_DotStar.h>
 #include <SPI.h>
 
-#define NUMPIXELS 144
+#define NUMPIXELS 60 // 144
 
-Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
+//Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
+
+#define DATAPIN    4
+#define CLOCKPIN   5
+
+Adafruit_DotStar strip(NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
+
 
 void setup() {
   #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000L)

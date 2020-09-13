@@ -1,9 +1,15 @@
 #include <Adafruit_DotStar.h>
 #include <SPI.h>
 
-#define NUMPIXELS 144 // 60 for bright white led strip, 144 for dotStar color 144
+#define NUMPIXELS 60 // 60 for bright white led strip, 144 for dotStar color 144
 
-Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
+//Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
+
+#define DATAPIN    4
+#define CLOCKPIN   5
+
+Adafruit_DotStar strip(NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
+
 
 void setup() {
   Serial.begin(9600);
@@ -14,9 +20,13 @@ void setup() {
 
   randomSeed(analogRead(0));
 
+  Serial.println("about to configure strip...");
+
   strip.begin();
   strip.clear();
   strip.show();
+
+  Serial.println("Strip configured...");
 }
 
 long generateIntensity() {
@@ -38,10 +48,10 @@ void loop() {
     strip.show();
     index = random(NUMPIXELS);
     flasher = nextFlasher();
-    delay(random(10, 2000));
+    delay(random(50, 1000));  // Crazy: 10, 250; Busy: 20, 500; Moderate: 50, 1000 Lazy: 100, 2000
   } else {
     flasher--;
-    delay(random(60, 120));
+    delay(random(40, 120));
   }
   long intensity = generateIntensity();
   Serial.println(intensity);

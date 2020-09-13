@@ -4,7 +4,12 @@
 
 #define NUMPIXELS 144
 
-Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
+//Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
+
+#define DATAPIN    4
+#define CLOCKPIN   5
+
+Adafruit_DotStar strip(NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
 
 const long SLIDE_DELAY = 4;
 const long REPOSITION_DELAY = 500;
