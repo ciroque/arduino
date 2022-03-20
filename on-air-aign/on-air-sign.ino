@@ -2,7 +2,7 @@
 
 On Air Sign
 
-Simple Web Server that creates an endpoint to toggle an LED attached to pin 8 on and off.
+Simple Web Server that creates an endpoint to toggle an LED attached to pin 9 on and off.
 
 
 Based on Sketch:
@@ -15,7 +15,7 @@ Based on Sketch:
 #include <WiFiNINA.h>
 
 #include "arduino_secrets.h" 
-///////please enter your sensitive data in the Secret tab/arduino_secrets.h
+
 char ssid[] = SECRET_SSID;        // your network SSID (name)
 char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as key for WEP)
 int keyIndex = 0;                 // your network key index number (needed only for WEP)
