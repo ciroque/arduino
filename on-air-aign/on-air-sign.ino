@@ -1,25 +1,16 @@
 /*
-  WiFi Web Server LED Blink
 
- A simple web server that lets you blink an LED via the web.
- This sketch will print the IP address of your WiFi module (once connected)
- to the Serial Monitor. From there, you can open that address in a web browser
- to turn on and off the LED on pin 9.
+On Air Sign
 
- If the IP address of your board is yourAddress:
- http://yourAddress/H turns the LED on
- http://yourAddress/L turns it off
+Simple Web Server that creates an endpoint to toggle an LED attached to pin 8 on and off.
 
- This example is written for a network using WPA encryption. For
- WEP or WPA, change the WiFi.begin() call accordingly.
 
- Circuit:
- * Board with NINA module (Arduino MKR WiFi 1010, MKR VIDOR 4000 and UNO WiFi Rev.2)
- * LED attached to pin 9
-
+Based on Sketch:
+ WiFi Web Server LED Blink
  created 25 Nov 2012
  by Tom Igoe
  */
+
 #include <SPI.h>
 #include <WiFiNINA.h>
 
@@ -29,8 +20,13 @@ char ssid[] = SECRET_SSID;        // your network SSID (name)
 char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as key for WEP)
 int keyIndex = 0;                 // your network key index number (needed only for WEP)
 
-const String ON_AIR = "GET /ON_AIR";
-const String OFF_AIR = "GET /OFF_AIR";
+const char* ON_AIR = "GET /ON_AIR";
+const char* OFF_AIR = "GET /OFF_AIR";
+const char* STATE = "GET /STATE";
+const char* STATE_ON = "ON";
+const char* STATE_OFF = "OFF";
+
+String state = STATE_OFF;
 
 int status = WL_IDLE_STATUS;
 WiFiServer server(80);
@@ -66,7 +62,6 @@ void setup() {
   printWifiStatus();                        // you're connected now, so print out the status
 }
 
-
 void loop() {
   WiFiClient client = server.available();   // listen for incoming clients
 
@@ -82,12 +77,6 @@ void loop() {
           // if the current line is blank, you got two newline characters in a row.
           // that's the end of the client HTTP request, so send a response:
           if (currentLine.length() == 0) {
-            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
-            // and a content-type so the client knows what's coming, then a blank line:
-            client.println("HTTP/1.1 204 No Content");
-
-            // The HTTP response ends with another blank line:
-            client.println();
             // break out of the while loop:
             break;
           } else {    // if you got a newline, then clear currentLine:
@@ -101,10 +90,17 @@ void loop() {
         if (currentLine.endsWith(ON_AIR)) {
           digitalWrite(9, HIGH);               // GET /H turns the LED on
           digitalWrite(LED_BUILTIN, HIGH);
+          state = STATE_ON;
+          writeNoContentResponse(client);
         }
-        if (currentLine.endsWith(OFF_AIR)) {
+        else if (currentLine.endsWith(OFF_AIR)) {
           digitalWrite(9, LOW);                // GET /L turns the LED off
           digitalWrite(LED_BUILTIN, LOW);
+          state = STATE_OFF;
+          writeNoContentResponse(client);
+        }
+        else if(currentLine.endsWith(STATE)) {
+          writeStateResponse(client, state);
         }
       }
     }
@@ -112,6 +108,24 @@ void loop() {
     client.stop();
     Serial.println("client disconnected");
   }
+}
+
+void writeNoContentResponse(WiFiClient client) {
+  client.println("HTTP/1.1 204 No Content");
+  client.println();
+}
+
+void writeStateResponse(WiFiClient client, String state) {
+  client.println("HTTP/1.1 200 OK");
+  client.println("content-type: text/plain; charset=UTF-8");
+  client.println("server: wagner/on-air-sign");
+  client.println("x-on-air: v1.0.0");
+  client.print("content-length: ");
+  client.println(state.length());
+  client.println();
+  client.println(state);
+  client.println();
+  client.println();
 }
 
 void printWifiStatus() {
