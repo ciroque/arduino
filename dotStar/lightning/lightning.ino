@@ -48,7 +48,7 @@ void loop() {
     strip.show();
     index = random(NUMPIXELS);
     flasher = nextFlasher();
-    delay(random(50, 1000));  // Crazy: 10, 250; Busy: 20, 500; Moderate: 50, 1000 Lazy: 100, 2000
+    delay(lazyStorm());
   } else {
     flasher--;
     delay(random(40, 120));
@@ -57,4 +57,24 @@ void loop() {
   Serial.println(intensity);
   strip.setPixelColor(index, intensity);
   strip.show();
+}
+
+long majorStorm() {
+  return storm(10, 250);
+}
+
+long busyStorm() {
+  return storm(20, 500);
+}
+
+long moderateStorm() {
+  return storm(50, 1000);
+}
+
+long lazyStorm() {
+  return storm(100,2000);
+}
+
+long storm(long min, long max) {
+  return random(min, max);
 }
