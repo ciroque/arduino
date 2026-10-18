@@ -2,7 +2,7 @@
 #include <SPI.h>
 
 // ----- Config -----
-#define NUM_LEDS  180
+#define NUM_LEDS  136
 #define DATAPIN   4
 #define CLOCKPIN  5
 
