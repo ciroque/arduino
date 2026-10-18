@@ -1,7 +1,7 @@
 #include <Adafruit_DotStar.h>
 #include <SPI.h>
 
-#define NUMPIXELS 60 // 60 for bright white led strip, 144 for dotStar color 144
+#define NUMPIXELS 90 // 60 for bright white led strip, 144 for dotStar color 144
 
 //Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_BRG);
 
@@ -48,7 +48,9 @@ void loop() {
     strip.show();
     index = random(NUMPIXELS);
     flasher = nextFlasher();
-    delay(lazyStorm());
+
+    // Set the Storm Level here
+    delay(majorStorm());
   } else {
     flasher--;
     delay(random(40, 120));
